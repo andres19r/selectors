@@ -22,7 +22,7 @@
       <label class="form-label">Country:</label>
       <select class="form-control" formControlName="country">
         <option value="">-- Select Country --</option>
-        <option *ngFor="let country of countries" [value]="country.alpha3Code | lowercase">
+        <option *ngFor="let country of countries" [value]="country.alpha3Code">
           {{ country.name }}
         </option>
       </select>
