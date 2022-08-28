@@ -13,6 +13,7 @@ export class SelectorPageComponent implements OnInit {
   myForm: FormGroup = this.fb.group({
     region: ['', Validators.required],
     country: ['', Validators.required],
+    border: ['', Validators.required],
   });
 
   // fill selectors
@@ -28,14 +29,22 @@ export class SelectorPageComponent implements OnInit {
     this.regions = this.countriesService.regions;
 
     // When the regions changes
-    this.myForm.get('region')?.valueChanges
-      .pipe(
-        tap(_ => this.myForm.get('country')?.reset('')),
-        switchMap(region => this.countriesService.getCountriesByRegion(region))
+    this.myForm
+      .get('region')
+      ?.valueChanges.pipe(
+        tap((_) => this.myForm.get('country')?.reset('')),
+        switchMap((region) =>
+          this.countriesService.getCountriesByRegion(region)
+        )
       )
-      .subscribe(countries => {
-        this.countries = countries
-      })
+      .subscribe((countries) => {
+        this.countries = countries;
+      });
+
+    // When the country changes
+    this.myForm
+      .get('country')
+      ?.valueChanges.subscribe((alpha) => console.log(alpha));
   }
 
   save() {
