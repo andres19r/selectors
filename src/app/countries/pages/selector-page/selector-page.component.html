@@ -29,14 +29,14 @@
     </div>
   </div>
 
-  <!-- Border -->
+  <!-- Borders -->
   <div class="row mb-3" *ngIf="borders.length > 0">
     <div class="col">
       <label class="form-label">Borders:</label>
       <select class="form-control" formControlName="border">
         <option value="">-- Select the border country --</option>
-        <option *ngFor="let border of borders" [value]="border">
-          {{ border }}
+        <option *ngFor="let border of borders" [value]="border.alpha3Code">
+          {{ border.name }}
         </option>
       </select>
     </div>

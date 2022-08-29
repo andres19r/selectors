@@ -19,7 +19,8 @@ export class SelectorPageComponent implements OnInit {
   // fill selectors
   regions: string[] = [];
   countries: CountrySmall[] = [];
-  borders: string[] = [];
+  // borders: string[] = [];
+  borders: CountrySmall[] = [];
 
   // ui
   loading: boolean = false;
@@ -38,7 +39,7 @@ export class SelectorPageComponent implements OnInit {
       ?.valueChanges.pipe(
         tap((_) => {
           this.myForm.get('country')?.reset('');
-          this.loading = true
+          this.loading = true;
         }),
         switchMap((region) =>
           this.countriesService.getCountriesByRegion(region)
@@ -46,7 +47,7 @@ export class SelectorPageComponent implements OnInit {
       )
       .subscribe((countries) => {
         this.countries = countries;
-        this.loading = false
+        this.loading = false;
       });
 
     // When the country changes
@@ -55,13 +56,17 @@ export class SelectorPageComponent implements OnInit {
       ?.valueChanges.pipe(
         tap((_) => {
           this.myForm.get('border')?.reset('');
-          this.loading = true
+          this.loading = true;
         }),
-        switchMap((code) => this.countriesService.getCountryByCode(code))
+        switchMap((code) => this.countriesService.getCountryByCode(code)),
+        switchMap((country) =>
+          this.countriesService.getCountriesByCode(country?.borders!)
+        )
       )
-      .subscribe((country) => {
-        this.borders = country?.borders || [];
-        this.loading = false
+      .subscribe((countries) => {
+        // this.borders = country?.borders || [];
+        this.borders = countries;
+        this.loading = false;
       });
   }
 
