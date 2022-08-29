@@ -17,7 +17,7 @@
   </div>
 
   <!-- Countries -->
-  <div class="row mb-3">
+  <div class="row mb-3" *ngIf="countries.length !== 0">
     <div class="col">
       <label class="form-label">Country:</label>
       <select class="form-control" formControlName="country">
@@ -30,7 +30,7 @@
   </div>
 
   <!-- Border -->
-  <div class="row mb-3">
+  <div class="row mb-3" *ngIf="borders.length > 0">
     <div class="col">
       <label class="form-label">Borders:</label>
       <select class="form-control" formControlName="border">
@@ -39,6 +39,14 @@
           {{ border }}
         </option>
       </select>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="loading">
+    <div class="col">
+      <div class="alert alert-primary">
+        Loading...
+      </div>
     </div>
   </div>
 
